@@ -1,0 +1,46 @@
+# Indian Sign Language (ISL) Recognition
+
+A deep learning project that recognises hand-sign letters from a single photo.
+Project: PRAICP-1000-IndiSignLang. Everything is in one Jupyter notebook.
+
+## Goal
+1. Image preprocessing
+2. A machine learning model that predicts the sign
+
+## Dataset
+- 4,971 close-up photos of one hand on a plain background (after removing 1 duplicate)
+- 24 classes: letters A to Y without J and Z
+- Split: 3,548 train / 713 validation / 710 test
+
+The dataset is not included in this repository.
+
+## What the notebook does
+- Checks the data for corrupted files and duplicates
+- Preprocesses images (padded resize to 160x160, augmentation, class weights)
+- Trains three models: a baseline CNN, MobileNetV2 and EfficientNetB0, plus an ensemble
+- Evaluates with accuracy, macro-F1, confusion matrix and Grad-CAM
+- Tests robustness on dark, blurred and noisy images
+- Saves the model and includes a live webcam demo
+
+## Results (test set)
+| Model | Accuracy |
+|---|---|
+| Baseline CNN | 99.72% |
+| EfficientNetB0 | 99.15% |
+| MobileNetV2 | 94.23% |
+| Ensemble | 99.86% |
+
+Note: the baseline CNN dropped to 6.6% accuracy on darkened images, so the final
+notebook uses stronger augmentation and picks the model by robustness.
+
+## How to run
+1. Open `PRAICP_1000_IndiSignLang_Advanced_v2.ipynb` in Google Colab with a GPU.
+2. Upload the dataset zip and unzip it to `/content/isl_data`.
+3. Run all cells from the top.
+
+## Limitations
+Only 24 static one-handed letters. No J, Z, words or sentences.
+Works best with close-up photos on a plain background.
+
+## Tech
+Python, TensorFlow/Keras, scikit-learn, OpenCV
